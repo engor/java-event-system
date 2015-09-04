@@ -9,22 +9,25 @@ import java.util.List;
  */
 public class EventHandler<TArgs extends EventArgs> implements IEventHandler<TArgs> {
 
+    private List<IEventListener<TArgs>> listeners;
+
     @Override
-    public void raiseEvent(Object sender, TArgs args) {
+    public void fireEvent(Object sender, TArgs args) {
         if (listeners == null) return;
-        for (IEventHandler<TArgs> listener : listeners) {
-            listener.raiseEvent(sender, args);
+        for (IEventListener<TArgs> i : listeners) {
+            i.onReceived(sender, args);
         }
     }
-    private List<IEventHandler<TArgs>> listeners;
-    public void subscribe(IEventHandler<TArgs> listener) {
+    
+    public void subscribe(IEventListener<TArgs> listener) {
         if (listener == null) return;
         if (listeners == null) {
             listeners = new ArrayList<>();
         }
         listeners.add(listener);
     }
-    public void unsubscribe(IEventHandler<TArgs> listener) {
+
+    public void unsubscribe(IEventListener<TArgs> listener) {
         if (listener == null) return;
         if (listeners == null) return;
         listeners.remove(listener);

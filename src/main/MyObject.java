@@ -1,7 +1,10 @@
 package main;
 
+import disposable.Disposer;
+import disposable.IDisposable;
 import events.EventArgs;
 import events.EventHandler;
+import events.IWithEvents;
 import events.SimpleEventHandler;
 
 /**
@@ -9,13 +12,13 @@ import events.SimpleEventHandler;
  * @author nerobot
  */
 
-public class MyObject {
+public class MyObject implements IDisposable, IWithEvents {
 
     private ObjState state = ObjState.Undefined;
     private String name;
     // публичный обработчик события, на который можно подписаться
-    public final EventHandler<ObjStateEventArgs> eventStateChanged = new EventHandler<>();
-    public final SimpleEventHandler eventDie = new SimpleEventHandler();
+    public final EventHandler<ObjStateEventArgs> eventStateChanged = EventSystem.newEvent(this);
+    public final SimpleEventHandler eventDie = EventSystem.newSimpleEvent(this);
 
     public MyObject(String name) {
         this.name = name;
@@ -30,7 +33,7 @@ public class MyObject {
         this.state = state;
         // проверяем подписчиков, чтобы зря не создавать объект с аргументами
         if (eventStateChanged.hasListeners()) {
-            eventStateChanged.raiseEvent(this, new ObjStateEventArgs(state));
+            eventStateChanged.fireEvent(this, new ObjStateEventArgs(state));
         }
     }
 
@@ -38,14 +41,14 @@ public class MyObject {
         setState(ObjState.Dead);
         if (eventDie.hasListeners()) {
             // нам важен сам факт события, параметры не нужны - empty
-            eventDie.raiseEvent(this, EventArgs.Empty);
+            eventDie.fireEvent(this, EventArgs.Empty);
         }
         dispose();
     }
 
-    private void dispose() {
-        eventDie.unsubscribeAll();
-        eventStateChanged.unsubscribeAll();
+    @Override
+    public void dispose() {
+        EventSystem.remove(this);
     }
 
     @Override

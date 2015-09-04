@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import events.EventArgs;
 import events.IEventHandler;
+import events.IEventListener;
 
 /**
  *
@@ -22,9 +23,9 @@ public class ObjManager {
         return obj;
     }
 
-    private static final IEventHandler<ObjStateEventArgs> eventHandlerForFreeze = new IEventHandler<ObjStateEventArgs>() {
+    private static final IEventListener<ObjStateEventArgs> eventHandlerForFreeze = new IEventListener<ObjStateEventArgs>() {
         @Override
-        public void raiseEvent(Object sender, ObjStateEventArgs args) {
+        public void onReceived(Object sender, ObjStateEventArgs args) {
             ObjState state = args.newState;
             if (state == ObjState.Freezed) {
                 System.out.println("object freeze detected for "+sender);
@@ -32,9 +33,9 @@ public class ObjManager {
         }
     };
 
-    private static final IEventHandler<EventArgs> eventHandlerForDie = new IEventHandler<EventArgs>() {
+    private static final IEventListener<EventArgs> eventHandlerForDie = new IEventListener<EventArgs>() {
         @Override
-        public void raiseEvent(Object sender, EventArgs args) {
+        public void onReceived(Object sender, EventArgs args) {
             System.out.println("object die detected for "+sender);
             // освобождаем ресурсы, если надо, и удаляем из списка
             items.remove((MyObject)sender);
