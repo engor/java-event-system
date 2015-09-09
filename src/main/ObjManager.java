@@ -1,10 +1,11 @@
 package main;
 
+import events.ObjStateEventArgs;
 import java.util.ArrayList;
 import java.util.List;
-import events.EventArgs;
-import events.IEventHandler;
-import events.IEventListener;
+import events.core.EventArgs;
+import events.core.IEventHandler;
+import events.core.IEventListener;
 
 /**
  *

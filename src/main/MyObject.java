@@ -1,11 +1,13 @@
 package main;
 
+import events.ObjStateEventArgs;
+import events.core.EventSystem;
 import disposable.Disposer;
 import disposable.IDisposable;
-import events.EventArgs;
-import events.EventHandler;
-import events.IWithEvents;
-import events.SimpleEventHandler;
+import events.core.EventArgs;
+import events.core.EventHandler;
+import events.core.IWithEvents;
+import events.core.SimpleEventHandler;
 
 /**
  *

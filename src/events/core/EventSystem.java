@@ -1,5 +1,5 @@
 
-package main;
+package events.core;
 
 import events.*;
 import java.util.ArrayList;

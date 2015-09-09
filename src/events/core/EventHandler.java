@@ -1,4 +1,4 @@
-package events;
+package events.core;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,8 @@ import java.util.List;
 public class EventHandler<TArgs extends EventArgs> implements IEventHandler<TArgs> {
 
     private List<IEventListener<TArgs>> listeners;
-
+    private boolean paused;
+    
     @Override
     public void fireEvent(Object sender, TArgs args) {
         if (listeners == null) return;
@@ -32,11 +33,28 @@ public class EventHandler<TArgs extends EventArgs> implements IEventHandler<TArg
         if (listeners == null) return;
         listeners.remove(listener);
     }
+
     public void unsubscribeAll() {
         if (listeners == null) return;
         listeners.clear();
     }
+
     public boolean hasListeners() {
         return listeners != null && !listeners.isEmpty();
     }
+
+    public boolean canBeReceived() {
+        return !paused && listeners != null && !listeners.isEmpty();
+    }
+    public void pause() {
+        paused = true;
+    }
+    public void resume() {
+        paused = false;
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
 }

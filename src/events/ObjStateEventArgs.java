@@ -1,6 +1,7 @@
-package main;
+package events;
 
-import events.EventArgs;
+import events.core.EventArgs;
+import main.ObjState;
 
 /**
  *
