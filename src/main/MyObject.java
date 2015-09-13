@@ -5,9 +5,9 @@ import events.core.EventSystem;
 import disposable.Disposer;
 import disposable.IDisposable;
 import events.core.EventArgs;
-import events.core.EventHandler;
+import events.core.Event;
 import events.core.IWithEvents;
-import events.core.SimpleEventHandler;
+import events.core.SimpleEvent;
 
 /**
  *
@@ -19,8 +19,8 @@ public class MyObject implements IDisposable, IWithEvents {
     private ObjState state = ObjState.Undefined;
     private String name;
     // публичный обработчик события, на который можно подписаться
-    public final EventHandler<ObjStateEventArgs> eventStateChanged = EventSystem.newEvent(this);
-    public final SimpleEventHandler eventDie = EventSystem.newSimpleEvent(this);
+    public final Event<ObjStateEventArgs> eventStateChanged = EventSystem.newEvent(this);
+    public final SimpleEvent eventDie = EventSystem.newSimpleEvent(this);
 
     public MyObject(String name) {
         this.name = name;

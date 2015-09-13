@@ -16,26 +16,26 @@ import java.util.Enumeration;
  */
 public final class EventSystem {
 
-    private static final Hashtable<IWithEvents, List<EventHandler<? extends EventArgs>>> events = new Hashtable<>();
+    private static final Hashtable<IWithEvents, List<Event<? extends EventArgs>>> events = new Hashtable<>();
 
     private EventSystem(){}
 
-    public static <TArgs extends EventArgs> EventHandler<TArgs> newEvent(IWithEvents eventOwner) {
-        EventHandler<TArgs> e = new EventHandler<>();
+    public static <TArgs extends EventArgs> Event<TArgs> newEvent(IWithEvents eventOwner) {
+        Event<TArgs> e = new Event<>();
         add(eventOwner, e);
         return e;
     }
 
-    public static SimpleEventHandler newSimpleEvent(IWithEvents eventOwner) {
-        SimpleEventHandler e = new SimpleEventHandler();
+    public static SimpleEvent newSimpleEvent(IWithEvents eventOwner) {
+        SimpleEvent e = new SimpleEvent();
         add(eventOwner, e);
         return e;
     }
 
     public static void remove(IWithEvents eventOwner) {
-        List<EventHandler<? extends EventArgs>> list = events.remove(eventOwner);
+        List<Event<? extends EventArgs>> list = events.remove(eventOwner);
         if (list == null) return;
-        for (EventHandler<? extends EventArgs> eventHandler : list) {
+        for (Event<? extends EventArgs> eventHandler : list) {
             eventHandler.unsubscribeAll();
         }
         list.clear();
@@ -48,8 +48,8 @@ public final class EventSystem {
         }
     }
 
-    private static void add(IWithEvents owner, EventHandler<? extends EventArgs> event) {
-        List<EventHandler<? extends EventArgs>> list = events.get(owner);
+    private static void add(IWithEvents owner, Event<? extends EventArgs> event) {
+        List<Event<? extends EventArgs>> list = events.get(owner);
         if (list == null) {
             list = new ArrayList<>();
             events.put(owner, list);

@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author nerobot
  */
-public class EventHandler<TArgs extends EventArgs> implements IEventSender<TArgs> {
+public class Event<TArgs extends EventArgs> implements IEventSender<TArgs> {
 
     private List<IEventListener<TArgs>> listeners;
     
