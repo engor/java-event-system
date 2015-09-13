@@ -1,7 +1,6 @@
 
 package events.core;
 
-import events.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -50,16 +49,12 @@ public final class EventSystem {
     }
 
     private static void add(IWithEvents owner, EventHandler<? extends EventArgs> event) {
-        List<EventHandler<? extends EventArgs>> list = find(owner);
+        List<EventHandler<? extends EventArgs>> list = events.get(owner);
         if (list == null) {
             list = new ArrayList<>();
             events.put(owner, list);
         }
         list.add(event);
-    }
-
-    private static List<EventHandler<? extends EventArgs>> find(IWithEvents owner) {
-        return events.get(owner);
     }
 
 }

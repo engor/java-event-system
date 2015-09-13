@@ -35,7 +35,7 @@ public class MyObject implements IDisposable, IWithEvents {
         this.state = state;
         // проверяем подписчиков, чтобы зря не создавать объект с аргументами
         if (eventStateChanged.hasListeners()) {
-            eventStateChanged.fireEvent(this, new ObjStateEventArgs(state));
+            eventStateChanged.sendEvent(this, new ObjStateEventArgs(state));
         }
     }
 
@@ -43,7 +43,7 @@ public class MyObject implements IDisposable, IWithEvents {
         setState(ObjState.Dead);
         if (eventDie.hasListeners()) {
             // нам важен сам факт события, параметры не нужны - empty
-            eventDie.fireEvent(this, EventArgs.Empty);
+            eventDie.sendEvent(this, EventArgs.Empty);
         }
         dispose();
     }

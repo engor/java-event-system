@@ -7,13 +7,12 @@ import java.util.List;
  *
  * @author nerobot
  */
-public class EventHandler<TArgs extends EventArgs> implements IEventHandler<TArgs> {
+public class EventHandler<TArgs extends EventArgs> implements IEventSender<TArgs> {
 
     private List<IEventListener<TArgs>> listeners;
-    private boolean paused;
     
     @Override
-    public void fireEvent(Object sender, TArgs args) {
+    public void sendEvent(Object sender, TArgs args) {
         if (listeners == null) return;
         for (IEventListener<TArgs> i : listeners) {
             i.onReceived(sender, args);
@@ -44,17 +43,7 @@ public class EventHandler<TArgs extends EventArgs> implements IEventHandler<TArg
     }
 
     public boolean canBeReceived() {
-        return !paused && listeners != null && !listeners.isEmpty();
-    }
-    public void pause() {
-        paused = true;
-    }
-    public void resume() {
-        paused = false;
-    }
-
-    public boolean isPaused() {
-        return paused;
+        return listeners != null && !listeners.isEmpty();
     }
 
 }

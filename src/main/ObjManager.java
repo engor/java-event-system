@@ -4,7 +4,7 @@ import events.ObjStateEventArgs;
 import java.util.ArrayList;
 import java.util.List;
 import events.core.EventArgs;
-import events.core.IEventHandler;
+import events.core.IEventSender;
 import events.core.IEventListener;
 
 /**
